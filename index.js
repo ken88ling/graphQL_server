@@ -1,4 +1,4 @@
-const { ApolloServer } = require('apollo-server')
+const { ApolloServer, ApolloError } = require('apollo-server')
 const SessionAPI = require('./datasources/sessions')
 const SpeakerAPI = require('./datasources/speakers')
 
@@ -16,6 +16,15 @@ const server = new ApolloServer({
   dataSources,
   introspection: true,
   playground: true,
+  debug: false,
+  formatError: (error) => {
+    if (error.extensions.code === 'INTERNAL_SERVER_ERROR') {
+      return new ApolloError('We are having some trouble', 'Error', {
+        token: 'uniqueToken',
+      })
+    }
+    return error
+  },
 })
 
 server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
