@@ -14,7 +14,7 @@ module.exports = gql`
       track: String
       level: String
     ): [Session]
-    sessionById(id: ID): Session
+    sessionById(id: ID): SessionOrError
     speakers: [Speaker]
     speakerById: Speaker
   }
@@ -23,6 +23,8 @@ module.exports = gql`
     toggleFavoriteSession(id: ID): Session
     addNewSession(session: SessionInput): Session
   }
+
+  union SessionOrError = Session | Error
 
   input SessionInput {
     title: String
@@ -35,6 +37,12 @@ module.exports = gql`
     track: String
     level: String
     favorite: Boolean
+  }
+
+  type Error {
+    code: String
+    message: String
+    token: String
   }
 
   type Session {
