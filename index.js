@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server')
+const { ApolloServer } = require('apollo-server')
 const SessionAPI = require('./datasources/sessions')
 const SpeakerAPI = require('./datasources/speakers')
 
