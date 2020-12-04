@@ -15,6 +15,15 @@ module.exports = gql`
       level: String
     ): [Session]
     sessionById(id: ID): Session
+    speakers: [Speaker]
+    speakerById: Speaker
+  }
+
+  type Speaker {
+    id: ID!
+    bia: String
+    name: String
+    sessions: [Session]
   }
 
   type Session {
